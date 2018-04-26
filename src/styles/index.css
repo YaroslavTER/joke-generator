@@ -1,0 +1,5 @@
+body {
+  background: #e8eaf6;
+  background: linear-gradient(to right, #e8eaf6, #fbe9e7);
+  font-weight: lighter;
+}
