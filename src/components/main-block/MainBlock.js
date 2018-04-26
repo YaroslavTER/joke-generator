@@ -8,17 +8,21 @@ export class MainBlock extends Component {
     super();
 
     this.state = {
-      jokeList: [],
       numberOfJokes: null,
       categoryList: [
         { name: "qwerty", isToggled: true },
         { name: "qwerty1", isToggled: false }
+      ],
+      jokeList: [
+        { text: "very nice joke", category: "asdfgh1" },
+        { text: "very nice joke", category: "asdfgh2" },
+        { text: "very nice joke", category: "asdfgh3" }
       ]
     };
 
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handleToggle = this.handleToggle.bind(this);
+    this.handleToggleChange = this.handleToggleChange.bind(this);
   }
 
   handleClick() {}
@@ -27,12 +31,10 @@ export class MainBlock extends Component {
     this.setState({ numberOfJokes: event.target.value });
   }
 
-  handleToggle(index, isToggled) {
+  handleToggleChange(index, isToggled) {
     let array = JSON.parse(JSON.stringify(this.state.categoryList));
     array[index].isToggled = isToggled;
-    this.setState({ categoryList: [].concat(array) }, () => {
-      console.log(array);
-    });
+    this.setState({ categoryList: [].concat(array) });
   }
 
   render() {
@@ -48,7 +50,7 @@ export class MainBlock extends Component {
             />
             <CheckBoxList
               ckechBoxList={this.state.categoryList}
-              onToggle={this.handleToggle}
+              onChnage={this.handleToggleChange}
             />
             <button
               onClick={this.handleClick}

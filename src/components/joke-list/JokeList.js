@@ -5,18 +5,16 @@ export class JokeList extends Component {
   renderJokeList(jokeList) {
     return jokeList.map((element, index) => {
       return (
-        <Joke id={index} category={element.category} text={element.text} />
+        <Joke
+          key={index + element.category}
+          category={element.category}
+          text={element.text}
+        />
       );
     });
   }
 
   render() {
-    return (
-      <div>
-        <Joke category="asdfgh" text="qwerty" />
-        <Joke category="asdfgh" text="qwerty" />
-        <Joke category="asdfgh" text="qwerty" />
-      </div>
-    );
+    return <div>{this.renderJokeList(this.props.jokeList)}</div>;
   }
 }

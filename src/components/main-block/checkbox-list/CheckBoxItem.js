@@ -8,19 +8,12 @@ export class CheckBoxItem extends Component {
       isToggled: this.props.isToggled
     };
 
-    this.handleToggle = this.handleToggle.bind(this);
     this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleToggle(event) {
-    /*this.setState({ isToggled: !this.state.isToggled }, () => {
-      this.props.onToggle(this.props.index, this.state.isToggled);
-    });*/
   }
 
   handleChange(event) {
     this.setState({ isToggled: !this.state.isToggled }, () => {
-      this.props.onToggle(this.props.index, this.state.isToggled);
+      this.props.onChnage(this.props.index, this.state.isToggled);
     });
   }
 
@@ -32,7 +25,6 @@ export class CheckBoxItem extends Component {
             type="checkbox"
             className="custom-control-input"
             id={this.props.index}
-            onClick={this.handleToggle}
             checked={this.state.isToggled}
             onChange={this.handleChange}
           />

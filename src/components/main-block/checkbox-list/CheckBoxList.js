@@ -9,7 +9,7 @@ export class CheckBoxList extends Component {
           key={index + element.name}
           index={index}
           name={element.name}
-          onToggle={this.props.onToggle}
+          onChnage={this.props.onChnage}
           isToggled={element.isToggled}
         />
       );
