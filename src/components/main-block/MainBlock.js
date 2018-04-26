@@ -10,10 +10,7 @@ export class MainBlock extends Component {
 
     this.state = {
       numberOfJokes: 1,
-      categoryList: [
-        { name: "nerdy", isToggled: true },
-        { name: "explicit", isToggled: true }
-      ],
+      categoryList: [],
       jokeList: []
     };
 
@@ -23,25 +20,40 @@ export class MainBlock extends Component {
   }
 
   handleClick() {
-    this.pullData();
-    /*
-    console.log(jokes);
-    const array = jokes.value.map(element => {
-      return {
-        text: element.joke,
-        category: element.categories[0]
-      };
-    });
-    this.setState({ jokeList: [].concat(array) });*/
-  }
-
-  async pullData() {
-    const data = ICNDb.getData();
-    data.then(request => request.json()).then(json => {
+    const link = `http://api.icndb.com/jokes/random/${
+      this.state.numberOfJokes
+    }?limitTo=${this.convertCategoryList()}`;
+    this.pullData(link, json => {
       const pulledList = json.value.map(element => {
         return { text: element.joke, category: element.categories[0] };
       });
       this.setState({ jokeList: [].concat(pulledList) });
+    });
+  }
+
+  convertCategoryList() {
+    const separator = ",";
+    const array = this.state.categoryList.map(element => {
+      if (element.isToggled) return element.name;
+    });
+    return array.join(separator);
+  }
+
+  async pullData(link, action) {
+    const data = ICNDb.getData(link);
+    data.then(request => request.json()).then(json => {
+      action(json);
+    });
+  }
+
+  componentDidMount() {
+    const link = `http://api.icndb.com/categories`;
+    this.pullData(link, json => {
+      const pulledList = json.value.map(element => {
+        return { name: element, isToggled: false };
+      });
+      pulledList.push({ name: "select all", isToggled: false });
+      this.setState({ categoryList: [].concat(pulledList) });
     });
   }
 
@@ -52,7 +64,9 @@ export class MainBlock extends Component {
   handleToggleChange(index, isToggled) {
     const array = JSON.parse(JSON.stringify(this.state.categoryList));
     array[index].isToggled = isToggled;
-    this.setState({ categoryList: [].concat(array) });
+    this.setState({
+      categoryList: [].concat(array)
+    });
   }
 
   render() {

@@ -1,6 +1,5 @@
 export const ICNDb = {
-  getData: async () => {
-    const link = `http://api.icndb.com/jokes/random/2?limitTo=[nerdy, explicit]`;
+  getData: async link => {
     const result = await fetch(link);
     return result;
   }
