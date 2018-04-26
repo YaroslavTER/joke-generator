@@ -2,22 +2,19 @@ import React, { Component } from "react";
 import { JokeList } from "../joke-list/JokeList";
 import { CheckBoxList } from "./checkbox-list/CheckBoxList";
 import { NumberSelector } from "./number-selector/NumberSelector";
+import { ICNDb } from "../../api/icndb/ICNDb";
 
 export class MainBlock extends Component {
   constructor() {
     super();
 
     this.state = {
-      numberOfJokes: null,
+      numberOfJokes: 1,
       categoryList: [
-        { name: "qwerty", isToggled: true },
-        { name: "qwerty1", isToggled: false }
+        { name: "nerdy", isToggled: true },
+        { name: "explicit", isToggled: true }
       ],
-      jokeList: [
-        { text: "very nice joke", category: "asdfgh1" },
-        { text: "very nice joke", category: "asdfgh2" },
-        { text: "very nice joke", category: "asdfgh3" }
-      ]
+      jokeList: []
     };
 
     this.handleClick = this.handleClick.bind(this);
@@ -25,14 +22,35 @@ export class MainBlock extends Component {
     this.handleToggleChange = this.handleToggleChange.bind(this);
   }
 
-  handleClick() {}
+  handleClick() {
+    this.pullData();
+    /*
+    console.log(jokes);
+    const array = jokes.value.map(element => {
+      return {
+        text: element.joke,
+        category: element.categories[0]
+      };
+    });
+    this.setState({ jokeList: [].concat(array) });*/
+  }
+
+  async pullData() {
+    const data = ICNDb.getData();
+    data.then(request => request.json()).then(json => {
+      const pulledList = json.value.map(element => {
+        return { text: element.joke, category: element.categories[0] };
+      });
+      this.setState({ jokeList: [].concat(pulledList) });
+    });
+  }
 
   handleChange(event) {
     this.setState({ numberOfJokes: event.target.value });
   }
 
   handleToggleChange(index, isToggled) {
-    let array = JSON.parse(JSON.stringify(this.state.categoryList));
+    const array = JSON.parse(JSON.stringify(this.state.categoryList));
     array[index].isToggled = isToggled;
     this.setState({ categoryList: [].concat(array) });
   }
