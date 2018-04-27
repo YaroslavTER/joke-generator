@@ -86,13 +86,15 @@ export class MainBlock extends Component {
 
   /**
    * Here is pulling categories and counting them as not selected.
+   * First item selected by default.
    */
   componentDidMount() {
     const link = `/categories`;
     this.setState({ categoryList: { isLoading: true } });
     ICNDb.pullData(link, json => {
-      const pulledList = json.value.map(element => {
-        return { name: element, isToggled: false };
+      const pulledList = json.value.map((element, i) => {
+        const isToggled = i === 0 ? true : false;
+        return { name: element, isToggled: isToggled };
       });
       pulledList.push({ name: this.state.selectAllName, isToggled: false });
       this.setState({
