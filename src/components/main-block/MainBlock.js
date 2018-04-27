@@ -12,8 +12,7 @@ export class MainBlock extends Component {
       numberOfJokes: { value: 1, isInvalid: false },
       categoryList: { value: [], isLoading: false },
       jokeList: { value: [], isLoading: false },
-      selectAllName: "select all",
-      isToggledAll: false
+      selectAllName: "select all"
     };
 
     this.handleClick = this.handleClick.bind(this);
@@ -106,24 +105,32 @@ export class MainBlock extends Component {
     this.setState({ numberOfJokes: { value: event.target.value } });
   }
 
+  /**
+   * There is checkbox handler.
+   */
   handleToggleChange(index, isToggled) {
     const array = JSON.parse(JSON.stringify(this.state.categoryList.value));
+    const length = array.length;
 
     if (array[index].name === this.state.selectAllName) {
       array.forEach(element => {
         element.isToggled = isToggled;
       });
-      this.setState({
-        categoryList: { value: [].concat(array) }
-      });
-      this.setState({ isToggledAll: isToggled });
-    } else {
-      array[index].isToggled = isToggled;
-      this.setState({
-        categoryList: { value: [].concat(array) }
-      });
-      this.setState({ isToggledAll: false });
+    } else if (
+      array[length - 1].isToggled &&
+      array[index].isToggled &&
+      array[index].name !== this.state.selectAllName
+    ) {
+      array[index].isToggled = false;
+      array[length - 1].isToggled = false;
+    } else if (array[index].isToggled) {
+      array[index].isToggled = false;
+    } else if (!array[index].isToggled) {
+      array[index].isToggled = true;
     }
+    this.setState({
+      categoryList: { value: [].concat(array) }
+    });
   }
 
   render() {
@@ -143,7 +150,6 @@ export class MainBlock extends Component {
               ckechBoxList={this.state.categoryList.value}
               isLoading={this.state.categoryList.isLoading}
               onChnage={this.handleToggleChange}
-              isToggledAll={this.state.isToggledAll}
             />
             <button
               onClick={this.handleClick}

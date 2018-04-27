@@ -12,7 +12,6 @@ export class CheckBoxList extends Component {
           name={element.name}
           onChnage={this.props.onChnage}
           isToggled={element.isToggled}
-          isToggledAll={this.props.isToggledAll}
         />
       );
     });

@@ -18,10 +18,7 @@ export class CheckBoxItem extends Component {
   }
 
   render() {
-    let isToggled;
-    if (this.props.isToggledAll) {
-      isToggled = true;
-    } else isToggled = this.state.isToggled;
+    console.log(this.props.name, this.props.isToggled);
     return (
       <div className="checkbox-item">
         <div className="custom-control custom-checkbox">
@@ -29,7 +26,7 @@ export class CheckBoxItem extends Component {
             type="checkbox"
             className="custom-control-input"
             id={this.props.index}
-            checked={isToggled}
+            checked={this.props.isToggled}
             onChange={this.handleChange}
           />
           <label className="custom-control-label" htmlFor={this.props.index}>
