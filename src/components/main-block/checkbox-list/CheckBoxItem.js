@@ -18,7 +18,6 @@ export class CheckBoxItem extends Component {
   }
 
   render() {
-    console.log(this.props.name, this.props.isToggled);
     return (
       <div className="checkbox-item">
         <div className="custom-control custom-checkbox">
