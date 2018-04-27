@@ -4,7 +4,7 @@ import { MainBlock } from "./main-block/MainBlock";
 
 class App extends Component {
   render() {
-    return <MainBlock />;
+    return <MainBlock name="JokeGenerator" />;
   }
 }
 

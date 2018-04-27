@@ -56,6 +56,10 @@
   margin: 0 auto;
 }
 
+.joke-list {
+  margin-bottom: 2em;
+}
+
 .joke {
   background: white;
   padding-top: 1em;
@@ -83,6 +87,7 @@
 }
 
 .loader {
+  margin-top: 1em;
   border: 2px solid #f3f3f3;
   border-radius: 50%;
   border-top: 2px solid #444;
